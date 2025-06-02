@@ -1,6 +1,5 @@
 package org.example.lesson2_2;
 
-
 import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
