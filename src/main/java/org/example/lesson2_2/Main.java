@@ -23,7 +23,6 @@ public class Main {
         int len = 12, initialValue=52;
         System.out.println(Arrays.toString(getArray(len, initialValue)));
 
-
     }
     //1. Создайте метод printThreeWords(), который при вызове должен отпечатать в столбец три слова: Orange, Banana, Apple
     public static void printThreeWords(){
@@ -36,7 +35,6 @@ public class Main {
         {
             System.out.println("Сумма положительна");
         } else System.out.println("Сумма отрицательна");
-
 
     }
     //3. Создайте метод printColor() в теле которого задайте int переменную value и инициализируйте ее любым значением. Если value меньше 0 (0 включительно), то в консоль метод должен вывести сообщение “Красный”, если лежит в пределах от 0 (0 исключительно) до 100 (100 включительно), то “Желтый”, если больше 100 (100 исключительно) - “Зеленый”;
@@ -58,10 +56,7 @@ public class Main {
     }
     //5. Напишите метод, принимающий на вход два целых числа и проверяющий, что их сумма лежит в пределах от 10 до 20 (включительно), если да – вернуть true, в противном случае – false.
     public static boolean withinTenToTwenty(int a, int b){
-        if (a+b>=10&&a+b<=20) {
-            return true;
-        } else return false;
-
+        return a+b>=10&&a+b<=20;
     }
     //6. Напишите метод, которому в качестве параметра передается целое число, метод должен напечатать в консоль, положительное ли число передали или отрицательное. Замечание: ноль считаем положительным числом.
     public static void isNumberPositive(int a){
@@ -72,10 +67,7 @@ public class Main {
     //7. Напишите метод, которому в качестве параметра передается целое число. Метод должен вернуть true, если число отрицательное, и вернуть false если положительное.
     //Замечание: ноль считаем положительным числом.
     public static boolean isNumberPositiveBool(int a){
-        if(a>=0){
-            return true;
-        } else return false;
-
+        return a>=0;
     }
     //8. Напишите метод, которому в качестве аргументов передается строка и число, метод должен отпечатать в консоль указанную строку, указанное количество раз;
     public static void repeater(String w, int a){
@@ -84,14 +76,10 @@ public class Main {
     }
     //9. Напишите метод, который определяет, является ли год високосным, и возвращает boolean (високосный - true, не високосный - false). Каждый 4-й год является високосным, кроме каждого 100-го, при этом каждый 400-й – високосный.
     public static boolean isYearLeap(int a){
-        if(a%400==0 || a%4==0 && a%100!=0){
-            return true;
-        } else return false;
-
+        return a%400==0 || a%4==0 && a%100!=0;
     }
     //10. Задать целочисленный массив, состоящий из элементов 0 и 1. Например: [ 1, 1, 0, 0, 1, 0, 1, 1, 0, 0 ]. С помощью цикла и условия заменить 0 на 1, 1 на 0;
     public static void exchangeOneToZero(){
-
         int nums[] = { 1, 1, 0, 0, 1, 0, 1, 1, 0, 0 };
         for (int i=0; i< nums.length; i++)
             if(nums[i]>0)
@@ -101,7 +89,6 @@ public class Main {
     }
     //11. Задать пустой целочисленный массив длиной 100. С помощью цикла заполнить его значениями 1 2 3 4 5 6 7 8 ... 100;
     public static void arrayFill(){
-
         int nums[] = new int[100];
         for (int i=0; i< nums.length; i++)
             nums[i]=i+1;
@@ -146,8 +133,4 @@ public class Main {
 
         return nums;
     }
-
-
-
-
 }
