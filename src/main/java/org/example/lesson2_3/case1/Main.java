@@ -30,9 +30,5 @@ public class Main {
         for (Product p : productsArray) {
             p.getProduct();
         }
-
     }
-
-
-
 }

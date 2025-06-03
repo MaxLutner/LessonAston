@@ -7,6 +7,7 @@ public class Product {
     private String originCountry;
     private float price;
     private Boolean bookingStatus;
+
     public Product(String productionName, String productionData, String productor, String originCountry, float price, Boolean bookingStatus){
         this.productionName=productionName;
         this.productionData=productionData;
@@ -15,6 +16,7 @@ public class Product {
         this.price=price;
         this.bookingStatus=bookingStatus;
     }
+
     public void getProduct(){
         System.out.println("Название: "+productionName);
         System.out.println("Дата производства: " +productionData);

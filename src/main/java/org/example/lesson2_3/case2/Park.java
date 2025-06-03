@@ -9,7 +9,6 @@ public class Park {
         private String cost;
         private String workTime;
 
-
         public Attraction() {
             this.name = "Неизвестно";
             this.workTime = "Не указано";
