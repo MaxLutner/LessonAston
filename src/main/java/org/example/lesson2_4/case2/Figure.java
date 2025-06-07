@@ -5,6 +5,7 @@ public abstract class Figure implements Calculation {
     String border;
 
     public abstract String fill();
+
     public abstract String border();
 
     void printCharacteristics() {
