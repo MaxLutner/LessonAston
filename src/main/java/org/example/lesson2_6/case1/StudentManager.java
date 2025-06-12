@@ -27,7 +27,7 @@ public class StudentManager {
         System.out.println("Студенты на курсе " + course + ":");
         for (Student s : students) {
             if (s.getCourse() == course) {
-                System.out.println(s.getName());
+                s.getName();
             }
         }
     }

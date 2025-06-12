@@ -16,8 +16,8 @@ public class Student {
         this.grades = new ArrayList<Double>(grades);
     }
 
-    public String getName() {
-        return name;
+    public void getName() {
+        System.out.println(name);
     }
 
     public void setName(String name) {
