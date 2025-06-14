@@ -1,6 +1,6 @@
-package org.example.lesson_7.Tests;
+package org.example.lesson2_7.Tests;
 
-import org.example.lesson_7.Arithmetic;
+import org.example.lesson2_7.Arithmetic;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

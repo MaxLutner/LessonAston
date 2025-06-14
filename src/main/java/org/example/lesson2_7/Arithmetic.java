@@ -1,4 +1,4 @@
-package org.example.lesson_7;
+package org.example.lesson2_7;
 
 public class Arithmetic {
     public static int add(int a, int b) { return a + b; }

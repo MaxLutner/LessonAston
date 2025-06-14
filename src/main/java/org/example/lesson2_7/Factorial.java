@@ -1,4 +1,4 @@
-package org.example.lesson_7;
+package org.example.lesson2_7;
 
 public class Factorial {
     public static long factorial(int n) {
