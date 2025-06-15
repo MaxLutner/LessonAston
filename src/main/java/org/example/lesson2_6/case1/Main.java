@@ -8,60 +8,42 @@ import static org.example.lesson2_6.case1.StudentManager.*;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Student> students = new ArrayList<>();
+        StudentManager manager = new StudentManager();
 
-        students.add(new Student("Иван", "А", 1, new ArrayList<>(Arrays.asList(4.0, 3.5, 4.2))));
-        students.add(new Student("Мария", "Б", 2, new ArrayList<>(Arrays.asList(2.0, 2.5, 3.0))));
-        students.add(new Student("Алексей", "А", 1, new ArrayList<>(Arrays.asList(3.0, 3.2, 3.5))));
-        students.add(new Student("Ольга", "В", 3, new ArrayList<>(Arrays.asList(5.0, 4.8, 4.9))));
+        Student s1 = new Student("Иван", "Группа1", 1, new double[]{4.0, 3.5, 4.2});
+        Student s2 = new Student("Мария", "Группа2", 2, new double[]{2.0, 2.5, 3.0});
+        Student s3 = new Student("Петр", "Группа1", 1, new double[]{3.0, 3.2, 2.8});
+        Student s4 = new Student("Алексей", "Группа3", 3, new double[]{4.5, 4.0, 4.8});
+        Student s5 = new Student("Елена", "Группа2", 2, new double[]{3.0, 3.5, 3.8});
+        Student s6 = new Student("Дмитрий", "Группа1", 1, new double[]{2.0, 2.5, 2.8});
+        Student s7 = new Student("Ольга", "Группа3", 3, new double[]{4.0, 4.2, 4.5});
+        Student s8 = new Student("Сергей", "Группа2", 2, new double[]{3.0, 2.8, 3.2});
+        Student s9 = new Student("Наталья", "Группа1", 1, new double[]{3.5, 3.7, 3.9});
+        Student s10 = new Student("Михаил", "Группа4", 4, new double[]{4.8, 4.9, 5.0});
 
-        System.out.println("Перед удалением и переводом:");
-        students.forEach(System.out::println);
+        manager.addStudent(s1);
+        manager.addStudent(s2);
+        manager.addStudent(s3);
+        manager.addStudent(s4);
+        manager.addStudent(s5);
+        manager.addStudent(s6);
+        manager.addStudent(s7);
+        manager.addStudent(s8);
+        manager.addStudent(s9);
+        manager.addStudent(s10);
 
-        printStudents(students, 1);
+        manager.removeStudentsWithLowAverage();
 
-        printStudents(students, 2);
+        manager.promoteStudents();
 
-        printStudents(students, 3);
+        manager.printStudents(manager.getStudents(), 1);
+        manager.printStudents(manager.getStudents(), 2);
+        manager.printStudents(manager.getStudents(), 3);
+        manager.printStudents(manager.getStudents(), 4);
 
-        removeStudentsWithLowAverage(students);
-
-        promoteStudents(students);
-
-        System.out.println("\nПосле удаления и перевода:");
-        students.forEach(System.out::println);
-
-        printStudents(students, 1);
-
-        printStudents(students, 2);
-
-        printStudents(students, 3);
-    }
-
-    private static void promoteStudents(ArrayList<Student> students) {
-        for (Student s : students) {
-            if (s.getAverageGrade() >= 3) {
-                s.setCourse(s.getCourse() + 1);
-            }
-        }
-    }
-
-    private static void printStudents(ArrayList<Student> students, int i) {
-        System.out.println("Студенты на курсе " + i + ":");
-        for (Student s : students) {
-            if (s.getCourse() == i) {
-                s.getName();
-            }
-        }
-    }
-
-    private static void removeStudentsWithLowAverage(ArrayList<Student> students) {
-        Iterator<Student> iterator = students.iterator();
-        while (iterator.hasNext()) {
-            Student s = iterator.next();
-            if (s.getAverageGrade() < 3) {
-                iterator.remove();
-            }
+        System.out.println("\nВсе студенты:");
+        for (Student s : manager.getStudents()) {
+            System.out.println(s.getName() + " - курс: " + s.getCourse());
         }
     }
 }
