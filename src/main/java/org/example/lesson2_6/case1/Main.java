@@ -2,6 +2,7 @@ package org.example.lesson2_6.case1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 import static org.example.lesson2_6.case1.StudentManager.*;
 
@@ -35,5 +36,32 @@ public class Main {
         printStudents(students, 2);
 
         printStudents(students, 3);
+    }
+
+    private static void promoteStudents(ArrayList<Student> students) {
+        for (Student s : students) {
+            if (s.getAverageGrade() >= 3) {
+                s.setCourse(s.getCourse() + 1);
+            }
+        }
+    }
+
+    private static void printStudents(ArrayList<Student> students, int i) {
+        System.out.println("Студенты на курсе " + i + ":");
+        for (Student s : students) {
+            if (s.getCourse() == i) {
+                s.getName();
+            }
+        }
+    }
+
+    private static void removeStudentsWithLowAverage(ArrayList<Student> students) {
+        Iterator<Student> iterator = students.iterator();
+        while (iterator.hasNext()) {
+            Student s = iterator.next();
+            if (s.getAverageGrade() < 3) {
+                iterator.remove();
+            }
+        }
     }
 }

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class Student {
-    private String name;
-    private String group;
-    private int course;
-    private ArrayList<Double> grades;
+    public String name;
+    public String group;
+    public int course;
+    public ArrayList<Double> grades;
 
     public Student(String name, String group, int course, ArrayList<Double> grades) {
         this.name = name;
