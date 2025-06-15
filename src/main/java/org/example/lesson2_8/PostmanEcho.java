@@ -1,6 +1,10 @@
 package org.example.lesson2_8;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertEquals;
+import static org.testng.AssertJUnit.assertEquals;
+
+
+import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 public class PostmanEcho {
