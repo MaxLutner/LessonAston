@@ -1,7 +1,7 @@
 package org.example.lesson2_8;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 public class PostmanEcho {
     private static String BASE_URL = "htpps://postman-echo.com";
