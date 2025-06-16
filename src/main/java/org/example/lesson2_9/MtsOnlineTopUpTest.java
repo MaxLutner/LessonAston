@@ -62,15 +62,12 @@ public class MtsOnlineTopUpTest {
         WebElement serviceOption = driver.findElement(By.xpath("//*[@id='pay-section']//ul/li[1]/p"));
         serviceOption.click();
 
-        // Ввод номера телефона
-        WebElement phoneInput = driver.findElement(By.id("id=\"connection-phone\"")); // замените на актуальный id или другой локатор
+        WebElement phoneInput = driver.findElement(By.id("id=\"connection-phone\""));
         phoneInput.sendKeys("297777777");
 
-        // Ввод суммы 500 рублей
-        WebElement amountInput = driver.findElement(By.id("id=\"connection-sum\"")); // замените на актуальный id или другой локатор
+        WebElement amountInput = driver.findElement(By.id("id=\"connection-sum\""));
         amountInput.sendKeys("500");
 
-        // Проверяем кнопку «Продолжить»
         WebElement continueButton = driver.findElement(By.xpath("//div[@id='pay-connection']//button"));
 
         assertTrue("Кнопка 'Продолжить' недоступна", continueButton.isEnabled());
