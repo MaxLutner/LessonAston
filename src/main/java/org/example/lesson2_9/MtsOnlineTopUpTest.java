@@ -1,5 +1,6 @@
 package org.example.lesson2_9;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,8 @@ public class MtsOnlineTopUpTest {
 
     @Before
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+        //System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+        WebDriverManager
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://mts.by");
