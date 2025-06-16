@@ -30,7 +30,6 @@ public class MtsOnlineTopUpTest {
 
         WebDriverWait wait = new WebDriverWait(driver, 3);
         try {
-            // Ждем появления кнопки "Принять"
             WebElement acceptCookiesButton = wait.until(
                     ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(), 'Принять')]"))
             );
@@ -39,12 +38,10 @@ public class MtsOnlineTopUpTest {
             System.out.println("Кнопка 'Принять' не найдена или уже нажата");
         }
 
-// Ждем появления целевого элемента
         WebElement targetElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > h2"))
         );
 
-// Прокручиваем страницу до элемента
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetElement);
 
     }
