@@ -1,5 +1,6 @@
 package org.example.lesson2_9;
 
+import org.openqa.selenium.JavascriptExecutor;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
@@ -8,7 +9,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -17,17 +21,37 @@ public class MtsOnlineTopUpTest {
     private WebDriver driver;
 
     @Before
-    public void setUp() {
+    public void setUp() throws InterruptedException {
         //System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
-        WebDriverManager
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://mts.by");
+
+        WebDriverWait wait = new WebDriverWait(driver, 3);
+        try {
+            // Ждем появления кнопки "Принять"
+            WebElement acceptCookiesButton = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(), 'Принять')]"))
+            );
+            acceptCookiesButton.click();
+        } catch (Exception e) {
+            System.out.println("Кнопка 'Принять' не найдена или уже нажата");
+        }
+
+// Ждем появления целевого элемента
+        WebElement targetElement = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > h2"))
+        );
+
+// Прокручиваем страницу до элемента
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetElement);
+
     }
 
     @Test
     public void testOnlineTopUpBlock() throws InterruptedException {
-        WebElement blockTitle = driver.findElement(By.xpath("//h2[contains(text(), 'Онлайн пополнение /n без комиссии')]"));
+        WebElement blockTitle = driver.findElement(By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > h2"));
         assertNotNull("Блок с названием 'Онлайн пополнение без комиссии' не найден", blockTitle);
         assertTrue("Название блока некорректное", blockTitle.isDisplayed());
 
@@ -58,17 +82,11 @@ public class MtsOnlineTopUpTest {
         driver.close();
         driver.switchTo().window(originalTab);
 
-        WebElement serviceDropdownButton = driver.findElement(By.xpath("//button[.//span[contains(text(), 'Услуги связи')]]"));
-        serviceDropdownButton.click();
-
-        WebElement serviceOption = driver.findElement(By.xpath("//*[@id='pay-section']//ul/li[1]/p"));
-        serviceOption.click();
-
         WebElement phoneInput = driver.findElement(By.id("id=\"connection-phone\""));
         phoneInput.sendKeys("297777777");
 
         WebElement amountInput = driver.findElement(By.id("id=\"connection-sum\""));
-        amountInput.sendKeys("500");
+        amountInput.sendKeys("50");
 
         WebElement continueButton = driver.findElement(By.xpath("//div[@id='pay-connection']//button"));
 
@@ -80,6 +98,7 @@ public class MtsOnlineTopUpTest {
     @After
     public void tearDown() {
         if (driver != null) {
+            driver.manage().deleteAllCookies();
             driver.quit();
         }
     }
