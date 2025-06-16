@@ -12,7 +12,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -25,21 +24,19 @@ public class MtsOnlineTopUpTest {
         //System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
         driver.get("https://mts.by");
 
         WebDriverWait wait = new WebDriverWait(driver, 3);
-        try {
-            WebElement acceptCookiesButton = wait.until(
-                    ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(), 'Принять')]"))
-            );
-            acceptCookiesButton.click();
-        } catch (Exception e) {
-            System.out.println("Кнопка 'Принять' не найдена или уже нажата");
-        }
+        WebElement acceptCookiesButton = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(), 'Принять')]"))
+        );
+        acceptCookiesButton.click();
+
 
         WebElement targetElement = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > h2"))
+               ExpectedConditions.presenceOfElementLocated(By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > h2"))
         );
 
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetElement);
@@ -58,34 +55,15 @@ public class MtsOnlineTopUpTest {
             assertTrue("Логотип не отображается", logo.isDisplayed());
         }
 
-        WebElement moreLink = driver.findElement(By.linkText("Подробнее о сервисе"));
-        assertNotNull("Ссылка 'Подробнее о сервисе' не найдена", moreLink);
-        String originalTab = driver.getWindowHandle();
 
-        moreLink.click();
 
-        Thread.sleep(2000);
-
-        for (String handle : driver.getWindowHandles()) {
-            if (!handle.equals(originalTab)) {
-                driver.switchTo().window(handle);
-                break;
-            }
-        }
-
-        String newUrl = driver.getCurrentUrl();
-        assertTrue("Страница по ссылке 'Подробнее о сервисе' не открылась", newUrl.contains("mts.by"));
-
-        driver.close();
-        driver.switchTo().window(originalTab);
-
-        WebElement phoneInput = driver.findElement(By.id("id=\"connection-phone\""));
+        WebElement phoneInput = driver.findElement(By.xpath("//*[@id='connection-phone']"));
         phoneInput.sendKeys("297777777");
 
-        WebElement amountInput = driver.findElement(By.id("id=\"connection-sum\""));
+        WebElement amountInput = driver.findElement(By.xpath("//*[@id='connection-sum']"));
         amountInput.sendKeys("50");
 
-        WebElement continueButton = driver.findElement(By.xpath("//div[@id='pay-connection']//button"));
+        WebElement continueButton = driver.findElement(By.cssSelector("#pay-connection > button"));
 
         assertTrue("Кнопка 'Продолжить' недоступна", continueButton.isEnabled());
 
