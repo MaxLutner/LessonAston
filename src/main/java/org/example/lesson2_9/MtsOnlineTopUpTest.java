@@ -34,11 +34,11 @@ public class MtsOnlineTopUpTest {
         );
         acceptCookiesButton.click();
 
-
+        Thread.sleep(1000);
         WebElement targetElement = wait.until(
                ExpectedConditions.presenceOfElementLocated(By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > h2"))
         );
-
+        Thread.sleep(1000);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetElement);
 
     }
@@ -59,9 +59,11 @@ public class MtsOnlineTopUpTest {
 
         WebElement phoneInput = driver.findElement(By.xpath("//*[@id='connection-phone']"));
         phoneInput.sendKeys("297777777");
+        Thread.sleep(1000);
 
         WebElement amountInput = driver.findElement(By.xpath("//*[@id='connection-sum']"));
         amountInput.sendKeys("50");
+        Thread.sleep(1000);
 
         WebElement continueButton = driver.findElement(By.cssSelector("#pay-connection > button"));
 
