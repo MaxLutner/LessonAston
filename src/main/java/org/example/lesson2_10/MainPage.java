@@ -24,13 +24,13 @@ public class MainPage {
     }
 
     public void scrollToPaymentSection() {
-        By sectionHeader = By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > div > div.pay__form > div.select > div.select__wrapper");
+        By sectionHeader = By.xpath("//h2[contains(text(), 'Онлайн пополнение')]");
         WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(sectionHeader));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public String getSelectedService() {
-        By selectedItem = By.cssSelector("div.select__wrapper.opened ul li.select__item.active p");
+        By selectedItem = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/button");
         return wait.until(ExpectedConditions.visibilityOfElementLocated(selectedItem)).getText();
     }
 

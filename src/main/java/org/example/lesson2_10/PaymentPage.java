@@ -15,7 +15,6 @@ public class PaymentPage {
         this.wait = new WebDriverWait(driver, 10);
     }
 
-
     public String getFieldPlaceholder(By locator) {
         WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         return input.getAttribute("placeholder");

@@ -4,8 +4,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
+import static java.time.Duration.ofSeconds;
 import static org.junit.Assert.*;
 
 
@@ -14,28 +20,23 @@ public class MtsPOOnlineTopUpTest {
     private WebDriver driver;
     private MainPage mainPage;
     private PaymentPage paymentPage;
+    private WebDriverWait wait;
 
     @Before
     public void setUp() throws InterruptedException {
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
-
         driver.get("https://mts.by");
-
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         mainPage = new MainPage(driver);
-
         mainPage.acceptCookies();
-
         mainPage.scrollToPaymentSection();
-
         paymentPage = new PaymentPage(driver);
 
         String selectedService = mainPage.getSelectedService();
         assertEquals("Услуги связи", selectedService.toLowerCase());
-
         checkUnfilledFieldsForAllOptions();
-
         testServicesConnectionOption();
     }
 
@@ -67,18 +68,17 @@ public class MtsPOOnlineTopUpTest {
     private void testServicesConnectionOption() throws InterruptedException {
         mainPage.selectService("Услуги связи");
 
-        paymentPage.fillField(By.cssSelector("#pay-section #connection-phone"), "297777777");
-        paymentPage.fillField(By.cssSelector("#connection-email"), "test@example.com");
+        paymentPage.fillField(By.xpath("//*[@id=\"connection-phone\"]"), "297777777");
+        paymentPage.fillField(By.xpath("#connection-email"), "test@example.com");
 
         paymentPage.clickContinue();
 
         ConfirmationDialog confirmDialog = new ConfirmationDialog(driver);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/app-root/div/div/div")));
         assertTrue(confirmDialog.isDisplayed());
 
         String sumText = paymentPage.getSumInConfirmation();
         String phoneText = paymentPage.getPhoneNumberInConfirmation();
-
-        Thread.sleep(1000);
 
         assertNotNull(sumText);
         assertNotNull(phoneText);
@@ -93,7 +93,6 @@ public class MtsPOOnlineTopUpTest {
 
     @After
     public void tearDown() throws InterruptedException {
-        Thread.sleep(2000);
         if (driver != null) {
             driver.manage().deleteAllCookies();
             driver.quit();
