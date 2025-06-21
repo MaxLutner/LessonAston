@@ -36,7 +36,7 @@ public class MtsOnlineTopUpTest {
 
         Thread.sleep(1000);
         WebElement targetElement = wait.until(
-               ExpectedConditions.presenceOfElementLocated(By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > h2"))
+               ExpectedConditions.presenceOfElementLocated(By.xpath("//h2[contains(text(), 'Онлайн пополнение')]"))
         );
         Thread.sleep(1000);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetElement);
@@ -54,8 +54,6 @@ public class MtsOnlineTopUpTest {
         for (WebElement logo : paymentLogos) {
             assertTrue("Логотип не отображается", logo.isDisplayed());
         }
-
-
 
         WebElement phoneInput = driver.findElement(By.xpath("//*[@id='connection-phone']"));
         phoneInput.sendKeys("297777777");
