@@ -21,7 +21,7 @@ public class MtsOnlineTopUpTest {
 
     @Before
     public void setUp() throws InterruptedException {
-        //System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+        
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
@@ -45,7 +45,7 @@ public class MtsOnlineTopUpTest {
 
     @Test
     public void testOnlineTopUpBlock() throws InterruptedException {
-        WebElement blockTitle = driver.findElement(By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > h2"));
+        WebElement blockTitle = driver.findElement(By.xpath("//h2[contains(text(), 'Онлайн пополнение')]"));
         assertNotNull("Блок с названием 'Онлайн пополнение без комиссии' не найден", blockTitle);
         assertTrue("Название блока некорректное", blockTitle.isDisplayed());
 
@@ -63,7 +63,7 @@ public class MtsOnlineTopUpTest {
         amountInput.sendKeys("50");
         Thread.sleep(1000);
 
-        WebElement continueButton = driver.findElement(By.cssSelector("#pay-connection > button"));
+        WebElement continueButton = driver.findElement(By.xpath("//*[@id=\"pay-connection\"]/button"));
 
         assertTrue("Кнопка 'Продолжить' недоступна", continueButton.isEnabled());
 
