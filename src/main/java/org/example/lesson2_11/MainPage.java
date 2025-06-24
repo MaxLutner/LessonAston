@@ -36,53 +36,13 @@ public class MainPage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(selectedItem)).getText();
     }
 
-    /*public void selectService(String serviceName) {
+    public void selectService(String serviceName) {
+
         By wrapper = By.cssSelector("div.select__wrapper");
         WebElement wrapperEl = wait.until(ExpectedConditions.elementToBeClickable(wrapper));
         wrapperEl.click();
-
-        By options = By.cssSelector("div.select__wrapper.opened ul li");
-        for (WebElement option : wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(options))) {
-            if (option.findElement(By.tagName("p")).getText().equals(serviceName)) {
-                option.click();
-                break;
-            }
-        }
-    }*/
-
-
-    public void selectService(String serviceName) {
-        // Селектор кнопки для открытия списка
-        By toggleButton = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/button");
-        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(toggleButton));
-        button.click();
-
-        // Массив селекторов вариантов
-        String[] optionSelectors = {
-                "#pay-section > div > div > div.col-12.col-xl-8 > section > div > div.pay__form > div.select > div.select__wrapper.opened > ul > li.select__item.active > p",
-                "#pay-section > div > div > div.col-12.col-xl-8 > section > div > div.pay__form > div.select > div.select__wrapper.opened > ul > li:nth-child(2) > p",
-                "//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/ul/li[3]/p",
-                "//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/ul/li[3]/p"
-        };
-
-        boolean found = false;
-
-        for (String selector : optionSelectors) {
-            try {
-                WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(selector)));
-                String text = element.getText().trim();
-                if (text.equals(serviceName)) {
-                    element.click();
-                    found = true;
-                    break;
-                }
-            } catch (TimeoutException e) {
-                // Элемент не найден по этому селектору, продолжаем
-            }
-        }
-
-        if (!found) {
-            throw new NoSuchElementException("Не удалось найти сервис с названием: " + serviceName);
-        }
+        WebElement dropDown = wait.until(ExpectedConditions.elementToBeClickable((By.xpath("//section[@class='pay']//ul[@class='select__list']//li//p[contains(text(),'" + serviceName + "')]"))));
+        dropDown.click();
     }
+
 }
