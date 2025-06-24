@@ -82,7 +82,7 @@ public class MtsPOOnlineTopUpTest {
         assertNotNull(phoneText);
 
         System.out.println("Сумма: " + sumText);
-        System.out.println("Телефон: " + phoneText);
+        System.out.println("Телефон: " + phoneText.replaceAll(".*Номер:\\s*", ""));
 
         assertTrue(paymentPage.isPaymentIconPresent(By.xpath("/html/body/app-root/div/div/div/app-payment-container/section/div/app-card-page/div/div[1]/app-card-input/form/div[1]/div[1]/app-input/div/div/div[2]/div/div/img[1]")));
         assertTrue(paymentPage.isPaymentIconPresent(By.xpath("/html/body/app-root/div/div/div/app-payment-container/section/div/app-card-page/div/div[1]/app-card-input/form/div[1]/div[1]/app-input/div/div/div[2]/div/div/img[2]")));
