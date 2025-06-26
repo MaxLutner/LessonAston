@@ -1,21 +1,25 @@
 package org.example.lesson2_11;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Attachment;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import org.testng.annotations.TestInstance;
 import static org.junit.Assert.*;
-
+@Epic("Пополнение MTS онлайн")
+@Feature("UI тесты страницы пополнения")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
 public class MtsPOOnlineTopUpTest {
-
     private WebDriver driver;
     private MainPage mainPage;
     private PaymentPage paymentPage;
@@ -34,11 +38,12 @@ public class MtsPOOnlineTopUpTest {
         paymentPage = new PaymentPage(driver);
 
     }
-
     @Test
+    @Story("Блок 'Онлайн пополнение\\n" +
+            "            \"без комиссии'")
+    @DisplayName("Проверка надписей в незаполненных полях каждого варианта оплаты услуг: услуги связи, домашний интернет, рассрочка, задолженность")
     public void checkUnfilledFieldsForAllOptions() {
         String[] options = {"Услуги связи", "Домашний интернет", "Рассрочка", "Задолженность"};
-        By wrapper = By.cssSelector("div.select__wrapper");
         for (String option : options) {
             mainPage.selectService(option);
             switch (option) {
@@ -66,6 +71,8 @@ public class MtsPOOnlineTopUpTest {
         }
     }
     @Test
+    @Story("Форма пополнения 'Услуги связи'")
+    @DisplayName("Заполнение формы услуги связи, проверка суммы, номера телефона и наличия иконок платежных систем в окне подтверждения")
     public void testServicesConnectionOption() throws InterruptedException {
         mainPage.selectService("Услуги связи");
 
@@ -94,8 +101,15 @@ public class MtsPOOnlineTopUpTest {
     @After
     public void tearDown() throws InterruptedException {
         if (driver != null) {
+            AllureUtils.attachScreenshot(driver);
             driver.manage().deleteAllCookies();
             driver.quit();
+        }
+    }
+    public static class AllureUtils {
+        @Attachment(value = "Screenshot", type = "image/png")
+        public static byte[] attachScreenshot(WebDriver driver) {
+            return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         }
     }
 }
