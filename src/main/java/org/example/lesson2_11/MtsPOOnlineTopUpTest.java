@@ -13,7 +13,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.TestInstance;
+import org.junit.jupiter.api.TestInstance;
+
 import static org.junit.Assert.*;
 @Epic("Пополнение MTS онлайн")
 @Feature("UI тесты страницы пополнения")
