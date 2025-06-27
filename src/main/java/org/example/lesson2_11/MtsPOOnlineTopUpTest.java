@@ -6,6 +6,8 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.qameta.allure.junit4.DisplayName;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.input.ObservableInputStream;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +16,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.jupiter.api.TestInstance;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 @Epic("Пополнение MTS онлайн")
@@ -25,6 +30,9 @@ public class MtsPOOnlineTopUpTest {
     private MainPage mainPage;
     private PaymentPage paymentPage;
     private WebDriverWait wait;
+    private ObservableInputStream.Observer logger;
+    private Object target;
+
     @Before
     public void setUp() throws InterruptedException {
         WebDriverManager.chromedriver().setup();
@@ -102,15 +110,37 @@ public class MtsPOOnlineTopUpTest {
     @After
     public void tearDown() throws InterruptedException {
         if (driver != null) {
-            AllureUtils.attachScreenshot(driver);
+            ScreenshotMaker.makeScreenshot(driver, "pay_page.png");
             driver.manage().deleteAllCookies();
             driver.quit();
         }
     }
     public static class AllureUtils {
         @Attachment(value = "Screenshot", type = "image/png")
-        public static byte[] attachScreenshot(WebDriver driver) {
+        public static byte[] makeScreenshot(WebDriver driver) {
             return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        }
+    }
+    public static class ScreenshotMaker {
+        public static void makeScreenshot (WebDriver driver, String fileName) {
+            File temp = ((TakesScreenshot)
+                    driver).getScreenshotAs (OutputType.FILE);
+            File destination = new File("./target/" + "pay_page.png");
+            try {
+                FileUtils.copyFile(temp, destination);
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+    @Override
+    public void onException(Throwable throwable, WebDriver driver) {
+        String fileName = "failure-" + System.currentTimeMillis() + ".png";
+        try {
+            ScreenshotMaker.makeScreenshot(driver, fileName);
+            logger.error("onException: Screenshot saved in target/" + fileName);
+        } catch (Exception e) {
+            logger.error("Failed to take screenshot during exception handling", e);
         }
     }
 }
