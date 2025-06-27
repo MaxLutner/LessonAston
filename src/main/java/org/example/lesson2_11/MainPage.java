@@ -42,7 +42,6 @@ public class MainPage {
         WebElement wrapperEl = wait.until(ExpectedConditions.elementToBeClickable(wrapper));
         wrapperEl.click();
         WebElement dropDown = wait.until(ExpectedConditions.elementToBeClickable((By.xpath("//section[@class='pay']//ul[@class='select__list']//li//p[contains(text(),'" + serviceName + "')]"))));
-        dropDown.click();
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dropDown);
     }
-
 }

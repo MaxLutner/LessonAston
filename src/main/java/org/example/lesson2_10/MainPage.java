@@ -10,7 +10,7 @@ public class MainPage {
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, 10);
+        this.wait = new WebDriverWait(driver, 3);
     }
 
     public void acceptCookies() {
@@ -30,21 +30,17 @@ public class MainPage {
     }
 
     public String getSelectedService() {
-        By selectedItem = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/button");
+        By selectedItem = By.cssSelector("div.select__wrapper");
         return wait.until(ExpectedConditions.visibilityOfElementLocated(selectedItem)).getText();
     }
 
     public void selectService(String serviceName) {
+
         By wrapper = By.cssSelector("div.select__wrapper");
         WebElement wrapperEl = wait.until(ExpectedConditions.elementToBeClickable(wrapper));
         wrapperEl.click();
-
-        By options = By.cssSelector("div.select__wrapper.opened ul li");
-        for (WebElement option : wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(options))) {
-            if (option.findElement(By.tagName("p")).getText().equals(serviceName)) {
-                option.click();
-                break;
-            }
-        }
+        WebElement dropDown = wait.until(ExpectedConditions.elementToBeClickable((By.xpath("//section[@class='pay']//ul[@class='select__list']//li//p[contains(text(),'" + serviceName + "')]"))));
+        dropDown.click();
     }
+
 }
